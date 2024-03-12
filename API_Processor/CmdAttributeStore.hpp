@@ -2,6 +2,9 @@
 #include <unordered_set>
 #include <locale> 
 
+#pragma once
+
+
 using namespace std;
 
 const std::vector<std::string> DEFAULT_ATTRIB = {
@@ -16,10 +19,15 @@ class CmdAttributeStore {
 			c = tolower(c);
 		return move(ns);
 	}
-public:
 	CmdAttributeStore() {
 		for (auto& c : DEFAULT_ATTRIB)
 			m_Attributes.insert(c);
+	}
+public:
+	
+	static CmdAttributeStore& GetInstance(){
+		static CmdAttributeStore cas;
+		return cas;
 	}
 	const std::unordered_set<std::string>& GetAllAtrribs() const {
 		return m_Attributes;

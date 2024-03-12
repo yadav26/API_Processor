@@ -1,6 +1,10 @@
 
 #include <iostream>
 #include <map>
+
+#pragma once
+
+
 using namespace std;
 
 enum class ATTRIBUTES_OPID {
@@ -55,12 +59,9 @@ class CmdAttributesMapper {
 			CmdsAttributesMap.erase(it);
 		}
 	}
-
-public:
-	
 	CmdAttributesMapper() {
-		const CmdStore store;
-		for (auto& cmd : store.GetAllCmds()) 
+
+		for (auto& cmd : CmdStore::GetCmdStore().GetAllCmds())
 			AddDefaultAttributes(cmd);
 	}
 
@@ -69,18 +70,24 @@ public:
 	CmdAttributesMapper(CmdAttributesMapper&&) = default;
 	CmdAttributesMapper& operator=(CmdAttributesMapper&&) = default;
 
-	CmdAttributesMapper(const CmdStore& store, const CmdAttributeStore& attributes) {
-		//link all attributes by default to all default cmds
-		for (auto& cmds : store.GetAllCmds()) {
-			for (auto& att : attributes.GetAllAtrribs()) {
-				CmdsAttributesMap[cmds].insert(att);
-			}
-		}
+public:
+	
+	static CmdAttributesMapper& GetInstance() {
+		static CmdAttributesMapper mapper;
+		return mapper;
 	}
+
+	//CmdAttributesMapper() {
+	//	//link all attributes by default to all default cmds
+	//	for (auto& cmds : CmdStore::GetCmdStore().GetAllCmds()) {
+	//		for (auto& att : CmdAttributeStore::GetInstance().GetAllAtrribs()) {
+	//			CmdsAttributesMap[cmds].insert(att);
+	//		}
+	//	}
+	//}
 	
 	void AddDefaultAttributes(const string& cmd) {
-		const CmdAttributeStore attributes;
-		for (auto& att : attributes.GetAllAtrribs()) {
+		for (auto& att : CmdAttributeStore::GetInstance().GetAllAtrribs()) {
 			CmdsAttributesMap[cmd].insert(att);
 		}
 	}

@@ -2,6 +2,8 @@
 #include <unordered_set>
 #include <locale> 
 
+#pragma once
+
 const std::vector<std::string> DEFAULT_CMDS = {
 	"activate",
 	"activate_rd",
@@ -20,11 +22,16 @@ class CmdStore {
 		return move(ns);
 	}
 
-public:
 	CmdStore() {
 		for (auto& c : DEFAULT_CMDS)
 			m_Cmds.insert(c);
 	}
+public:
+	static CmdStore& GetCmdStore() {
+		static CmdStore cs;
+		return cs;
+	}
+	
 	const std::unordered_set<std::string>& GetAllCmds() const{
 		return m_Cmds;
 	}

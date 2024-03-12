@@ -9,6 +9,7 @@
 using namespace std;
 
 class CmdValidator {
+
 	std::string to_lower(const std::string& s) {
 		std::string ns = s;
 		for (char& c : ns)
@@ -55,7 +56,7 @@ public:
 
 		auto v = Tokenizer(str);
 		if (v[0] != "CMND") {
-			cout << "\n Failed CMND";
+			cout << "\n Failed CMND identity.";
 			return false;
 		}
 
@@ -64,30 +65,33 @@ public:
 			cout << "\n CMDlen match failed.";
 			return false;
 		}
+		
+		if (!CmdStore::GetCmdStore().IsValidCmd(v[2])) {
+			cout << "\n Failed cmd check from store: " << v[1];
+			return false;
+		}
 
 		return Validate_Attributes(v[2], {v.begin() + 3, v.end()});
 	}
 
 	bool Validate_Attributes(string& cmd, vector<string> v) {
 
-		CmdAttributeStore cas;
-		CmdAttributesMapper mapper;
 		for (int i = 0; i < v.size(); i = i+3) {
 			//validate the att name
 			string name = v[i];
-			if (!cas.IsValidAttrib(name))
+			if (!CmdAttributeStore::GetInstance().IsValidAttrib(name))
 			{
 				cout << "\n Invalid attribute name "<< name ;
 				return false;
 			}
-			if (!mapper.ValidAttributeForCmd(cmd, name))
+			if (!CmdAttributesMapper::GetInstance().ValidAttributeForCmd(cmd, name))
 			{
 				cout << "\n Invalid cmd attribute pair: " << cmd <<", " << name;
 				return false;
 			}
 			auto len = atoi(v[i+1].c_str());
 			if (v[i+2].size() != len) {
-				cout << "\n attrib len match failed.";
+				printf("\n attrib len match failed. expected(%d), actual(%d)", v[i + 2].size(), len );
 				return false;
 			}
 			
