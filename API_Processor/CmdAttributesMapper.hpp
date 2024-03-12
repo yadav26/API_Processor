@@ -108,4 +108,13 @@ public:
 				cout << "\n Invalid attribute update operation.";
 		}
 	}
+
+	bool ValidAttributeForCmd(const string& cmd, const string& att) {
+		auto a = to_lower(att);
+		auto c = to_lower(cmd);
+		if (auto it = CmdsAttributesMap[c].find(a); it != CmdsAttributesMap[c].end()) {
+			return true;
+		}
+		return false;
+	}
 };

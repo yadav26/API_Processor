@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="API_Processor.cpp" />
+    <ClCompile Include="CmdAttributesValidator.hpp" />
     <ClCompile Include="CmdBufferManager.hpp" />
     <ClCompile Include="CmdDispatcher.hpp" />
     <ClCompile Include="CmdManager.hpp" />

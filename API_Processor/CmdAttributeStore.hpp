@@ -5,7 +5,7 @@
 using namespace std;
 
 const std::vector<std::string> DEFAULT_ATTRIB = {
-	"AMOUNT", "TXT"
+	"amount", "txt"
 };
 
 class CmdAttributeStore {

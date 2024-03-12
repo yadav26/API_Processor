@@ -3,10 +3,10 @@
 #include <locale> 
 
 const std::vector<std::string> DEFAULT_CMDS = {
-	"ACTIVATE",
-	"ACTIVATE_RD",
-	"SETTLE",
-	"CLEAR_SESSION"
+	"activate",
+	"activate_rd",
+	"settle",
+	"clear_session"
 };
 
 class CmdStore {
