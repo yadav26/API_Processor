@@ -9,11 +9,7 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Admin">
+    <Filter Include="Source Files\AdminCommandEditor">
       <UniqueIdentifier>{f6ba9431-f099-42ec-aac1-a53f8619b41c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -27,11 +23,11 @@
     <ClCompile Include="CmdDispatcher.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResponseGenerator.hpp">
+    <ClCompile Include="Response.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="CmdManager.hpp">
-      <Filter>Admin</Filter>
+      <Filter>Source Files\AdminCommandEditor</Filter>
     </ClCompile>
     <ClCompile Include="CmdAttributesValidator.hpp">
       <Filter>Header Files</Filter>
@@ -48,13 +44,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CmdStore.hpp">
-      <Filter>Admin</Filter>
+      <Filter>Source Files\AdminCommandEditor</Filter>
     </ClInclude>
     <ClInclude Include="CmdAttributesMapper.hpp">
-      <Filter>Admin</Filter>
+      <Filter>Source Files\AdminCommandEditor</Filter>
     </ClInclude>
     <ClInclude Include="CmdAttributeStore.hpp">
-      <Filter>Admin</Filter>
+      <Filter>Source Files\AdminCommandEditor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

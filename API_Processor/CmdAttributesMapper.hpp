@@ -77,15 +77,6 @@ public:
 		return mapper;
 	}
 
-	//CmdAttributesMapper() {
-	//	//link all attributes by default to all default cmds
-	//	for (auto& cmds : CmdStore::GetCmdStore().GetAllCmds()) {
-	//		for (auto& att : CmdAttributeStore::GetInstance().GetAllAtrribs()) {
-	//			CmdsAttributesMap[cmds].insert(att);
-	//		}
-	//	}
-	//}
-	
 	void AddDefaultAttributes(const string& cmd) {
 		for (auto& att : CmdAttributeStore::GetInstance().GetAllAtrribs()) {
 			CmdsAttributesMap[cmd].insert(att);

@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 const std::vector<std::string> DEFAULT_ATTRIB = {
 	"amount", "txt"
 };
