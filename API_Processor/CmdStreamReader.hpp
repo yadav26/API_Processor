@@ -6,6 +6,12 @@
 
 using namespace std;
 
+//This class reads the byte stream and organise into buffer format
+//Buffer is tokenized for the input stream
+//since the termination of the command is unknown only new command arrival
+//hence buffer will always have one residual command unfurnish untill it 
+//all exit
+
 class CmdStreamReader {
 	stringstream stream;
 	static inline bool done = false;
