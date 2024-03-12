@@ -17,3 +17,17 @@ Dispatcher is the consumer of the buffer. It will wait till buffer available and
 
 ### CmdValidator 
 This is command handler to process the buffer. It validates the buffer command and generate appropriate response.
+
+
+## AdminCommandEditor - Dynamic extension mode 
+### CmdManager 
+This class is responsible to mantain / update the command store and attribute mappings. Any command could be associated to listed attributes. This allows the editing of the commnads paired attributes.
+
+### CmdAttributesMapper
+This class is responsible for association of commands and attributes
+
+### CmdStore
+This class is storage of all commands and provides validity of commands names
+
+### CmdAttributeStore
+This class is storage of all attributes and provides validity of attribute names
