@@ -10,6 +10,7 @@ class CmdStreamReader {
 	stringstream stream;
 	static inline bool done = false;
 
+	//auto s = "[  C M N D][8 ][ A C T I V A T E ][T  X T][20][TAAAA   AP YOUR CREDIT CARD][  AMO UNT ][3][400 ] [  T X  T  ][20][TAP YOUR CREDIT CARD]";
 	vector<string> Tokenizer(string str, string& nt) {
 		vector<string> v;
 		int start = 0;
@@ -60,14 +61,13 @@ public:
 		};
 
 		int i = -1;
-		while (!done && ++i < vs.size()) {
-
-			stream << vs[i];
+		while (!done ) {
+			string s;
+			cout << "\n Enter api stream cmd : ";
+			std::getline(std::cin, s);
+			stream << s;
 			extractCMND();
-			if (i == vs.size()-1) 
-				i = -1;
 		}
-
 		extractLastCMND();
 	}
 
@@ -78,13 +78,29 @@ public:
 	void extractCMND() {
 		auto s = stream.str();
 		string nontokenized;
+		int opencnt = 0;
+		for (auto& p : s) {
+			if (p == '[' && opencnt >= 1) {
+				cout << "\n Corrupted stream, [[ clear it now. " << s;
+				stream = std::stringstream();
+				return;
+			}
+			if (p == ']' && opencnt < 0) {
+				cout << "\n Corrupted stream, ]] clear it now. " << s;
+				stream = std::stringstream();
+				return;
+			}
+			if (p == '[' )++opencnt;
+			if (p == ']') --opencnt;
+		}
 		vector<string> v = Tokenizer(s, nontokenized);
 
 		int start = -1, end = -1;
 		for (int i = 0; i < v.size(); ++i) {
 			if (v[i] == "CMND") {
-				if (start == -1) start = i;
 				if (start != -1) end = i ;
+				if (start == -1) start = i;
+
 			}
 		}
 		if (start != -1 && end > start)

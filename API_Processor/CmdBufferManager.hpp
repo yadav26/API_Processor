@@ -15,7 +15,6 @@ class CmdBufferManager {
 	std::mutex m;
 	CmdBufferManager() = default;
 
-
 public:
 	static CmdBufferManager& GetInstance() {
 		static CmdBufferManager queue;
