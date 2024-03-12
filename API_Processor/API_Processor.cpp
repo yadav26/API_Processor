@@ -8,17 +8,27 @@ using namespace std;
 
 int main()
 {
-    //auto mgr = CmdManager::GetCmdManager();
-        
+    std::thread cmdEditor([&]() {
+        auto mgr = CmdManager::GetCmdManager();
+        mgr.start();
+    });
+
+    cmdEditor.join();
     std::thread process([&]() {
+        cout << "\n------Dispatcher successfully started.\n"; 
         CmdDispatcher dispatcher;
         dispatcher.start();
-        });
+    });
+    
+    std::thread byteFeeder([&]() {
+        cout << "\n------Stream bytes reader successfully started.\n";
+        CmdStreamReader sr;
+        sr.start();
+    });
 
-    CmdStreamReader sr;
-    sr.start();
 
     process.join();
+    byteFeeder.join();
 
     return 0;
 }

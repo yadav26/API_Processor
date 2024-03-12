@@ -63,12 +63,19 @@ public:
 		int i = -1;
 		while (!done ) {
 			string s;
-			cout << "\n Enter api stream cmd : ";
+			cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";
 			std::getline(std::cin, s);
+			int pos = s.find("[TERMINATE]");
+			if (pos != string::npos)
+				done = true;
 			stream << s;
 			extractCMND();
 		}
 		extractLastCMND();
+		//signal dispatcher to finish
+		CmdDispatcher cd;
+		cd.finish();
+		
 	}
 
 	void finish() {

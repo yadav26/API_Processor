@@ -9,9 +9,10 @@ using namespace std;
 
 enum class ATTRIBUTES_OPID {
 	AddInExistingCmd,
-	removeFromExistingCmd,
+	RemoveFromExistingCmd,
 	NewCmdNewAttributes,
-	DeleteCmdAndAllAttributes
+	DeleteCmdAndAllAttributes,
+	ShowAttributesFromCmd
 };
 
 class CmdAttributesMapper {
@@ -29,7 +30,7 @@ class CmdAttributesMapper {
 		return true;
 	}
 
-	bool removeFromExistingCmd(const string& cmd, const unordered_set<string>& attributes) {
+	bool RemoveFromExistingCmd(const string& cmd, const unordered_set<string>& attributes) {
 		auto att = CmdsAttributesMap[to_lower(cmd)];
 		for (auto& a : attributes) {
 			for (auto it = att.begin(); it != att.end();)
@@ -51,6 +52,7 @@ class CmdAttributesMapper {
 		if (addDefault) {
 			AddDefaultAttributes(c);
 		}
+		return true;
 	}
 
 	void DeleteCmdAndAllAttributes(const string& cmd) {
@@ -82,7 +84,13 @@ public:
 			CmdsAttributesMap[cmd].insert(att);
 		}
 	}
-
+	string ListAllAttributes(ATTRIBUTES_OPID opn, const string& cmd) {
+		string s;
+		for (auto& a : CmdsAttributesMap[cmd])
+			s = s + a + ",";
+		
+		return move(s);
+	}
 	void UpdateAttributes(ATTRIBUTES_OPID opn, const string& cmd, const unordered_set<string>& attributes) {
 
 		switch (opn) {
@@ -90,9 +98,9 @@ public:
 			{
 				AddInExistingCmd(cmd,attributes);
 			}break;
-			case ATTRIBUTES_OPID::removeFromExistingCmd:
+			case ATTRIBUTES_OPID::RemoveFromExistingCmd:
 			{
-				removeFromExistingCmd(cmd, attributes);
+				RemoveFromExistingCmd(cmd, attributes);
 			}break;
 			case ATTRIBUTES_OPID::NewCmdNewAttributes:
 			{
