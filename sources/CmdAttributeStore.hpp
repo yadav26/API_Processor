@@ -8,11 +8,10 @@
 using namespace std;
 
 
-const std::vector<std::string> DEFAULT_ATTRIB = {
+class CmdAttributeStore {
+	const std::vector<std::string> DEFAULT_ATTRIB = {
 	"amount", "txt"
 };
-
-class CmdAttributeStore {
 	std::unordered_set<std::string> m_Attributes;
 	std::string to_lower(const std::string& s) {
 		std::string ns = s;

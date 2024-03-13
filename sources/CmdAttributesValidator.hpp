@@ -14,7 +14,7 @@ class CmdAttributesValidator {
 		std::string ns = s;
 		for (char& c : ns)
 			c = tolower(c);
-		return move(ns);
+		return ns;
 	}
 
 public:

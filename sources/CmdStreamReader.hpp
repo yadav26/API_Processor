@@ -118,7 +118,6 @@ public:
 	CmdLineStreamReader() = default;
 	void start()override {
 
-		int i = -1;
 		while (!done) {
 			string s;
 			cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";

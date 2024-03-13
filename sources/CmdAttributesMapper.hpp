@@ -89,7 +89,7 @@ public:
 		for (auto& a : CmdsAttributesMap[cmd])
 			s = s + a + ",";
 		
-		return move(s);
+		return s;
 	}
 	void UpdateAttributes(ATTRIBUTES_OPID opn, const string& cmd, const unordered_set<string>& attributes) {
 

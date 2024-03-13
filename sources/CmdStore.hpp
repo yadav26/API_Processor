@@ -1,18 +1,19 @@
 #include <string>
+#include <vector>
 #include <unordered_set>
 #include <locale> 
 
 #pragma once
 
-const std::vector<std::string> DEFAULT_CMDS = {
-	"activate",
-	"activate_rd",
-	"settle",
-	"clear_session"
-};
+
 
 class CmdStore {
-
+	const std::vector<std::string> DEFAULT_CMDS = {
+		"activate",
+		"activate_rd",
+		"settle",
+		"clear_session"
+	};
 	std::unordered_set<std::string> m_Cmds;
 
 	std::string to_lower(const std::string& s) {
