@@ -3,6 +3,7 @@
 #include "CmdBufferManager.hpp"
 #include <sstream>
 #include <vector>
+#include "CmdDispatcher.hpp"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ using namespace std;
 //all exit
 
 class CmdStreamReader {
+
 	//auto s = "[  C M N D][8 ][ A C T I V A T E ][T  X T][20][TAAAA   AP YOUR CREDIT CARD][  AMO UNT ][3][400 ] [  T X  T  ][20][TAP YOUR CREDIT CARD]";
 	vector<string> Tokenizer(string str, string& nt) {
 		vector<string> v;
@@ -54,6 +56,8 @@ class CmdStreamReader {
 		return v;
 	}
 protected:
+	CmdDispatcher mDispatcher;
+	   
 	void extractCMND(stringstream& stream) {
 		auto s = stream.str();
 		string nontokenized;
@@ -95,6 +99,7 @@ protected:
 		}
 	}
 	void extractLastCMND(stringstream& stream) {
+		std::cout <<"\nFinal command execute: ";
 		auto s = stream.str();
 		string nontokenized;
 		vector<string> v = Tokenizer(s, nontokenized);
@@ -103,19 +108,31 @@ protected:
 		buffer.Push({ v.begin() , v.end() });
 		stream = std::stringstream();
 	}
+	
 public:
 	virtual void start() = 0;
 	virtual void finish() {
-
 	}
+	virtual ~CmdStreamReader(){}
 };
 
 class CmdLineStreamReader : public CmdStreamReader
 {
 	stringstream stream;
 	static inline bool done = false;
+	std::thread dispatcherThread;
 public:
-	CmdLineStreamReader() = default;
+	CmdLineStreamReader() {
+		std::thread process([&]() {
+		    cout << "\n------Dispatcher successfully started.\n"; 
+			mDispatcher.start();
+		});
+		dispatcherThread = move(process);
+	};
+	~CmdLineStreamReader()
+	{
+		dispatcherThread.join();
+	}
 	void start()override {
 
 		while (!done) {
@@ -129,9 +146,9 @@ public:
 			extractCMND(stream);
 		}
 		extractLastCMND(stream);
+
 		//signal dispatcher to finish
-		CmdDispatcher cd;
-		cd.finish();
+		mDispatcher.finish();
 	}
 };
 

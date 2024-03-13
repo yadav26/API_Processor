@@ -13,7 +13,7 @@ public:
 	void start() {
         auto& buffer = CmdBufferManager::GetInstance();
         
-        while (!done) {
+        while (!done ) {
             if (buffer.IsEmpty()) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 continue;
@@ -25,6 +25,15 @@ public:
             // share the buffer
             auto reply = ProcessCmdValidation(cmdTokens);
             cout << "\n CmdID(" << ++cmdid << ") : " << reply << endl;
+        }
+        
+        //residual buffer processing.
+        while(!buffer.IsEmpty()){
+            vector<string> cmdTokens = buffer.GetCmd();
+            buffer.Pop();
+            cmdTokens.pop_back();
+            auto reply = ProcessCmdValidation(cmdTokens);
+            cout << "\n Residual :CmdID(" << ++cmdid << ") : " << reply << endl;
         }
 	}
 

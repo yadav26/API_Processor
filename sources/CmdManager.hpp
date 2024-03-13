@@ -65,7 +65,7 @@ public:
         string sin;
         bool done = false;
         while (!done) {
-            cout << "\n===================\nAdd below operation id\n0: Print attributes of command,\n1: Add a new command, \n2: Add an attribute to existing command, \n3: Delete Command \n4: Remove attributes from command \n5: Anything else to exit";
+            cout << "\n===================\nEnter operation id as \n0: Print attributes of command,\n1: Add a new command, \n2: Add an attribute to existing command, \n3: Delete Command \n4: Remove attributes from command \n5: Anything else to exit to run dispatcher";
             cout << "\n===== : ";
             std::getline(std::cin, sin);
             op = std::atoi(sin.c_str());
