@@ -1,6 +1,8 @@
 # API_Processor
 
 ## Building
+git clone https://github.com/yadav26/API_Processor.git
+cd ./API_Processor
 ### Windows cmake building
 cmake -S . -B winbuild
 cmake --build winbuild
