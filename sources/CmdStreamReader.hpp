@@ -1,3 +1,9 @@
+/***********************************************************************************************
+        Anshul Yadav
+        er.anshulyadav@gmail.com
+        yadav26@github
+        This is for tritium api processor
+************************************************************************************************/
 #pragma once
 
 #include "CmdBufferManager.hpp"
@@ -7,6 +13,7 @@
 
 using namespace std;
 
+//er.anshulyadav@gmail.com
 //This class reads the byte stream and organise into buffer format
 //Buffer is tokenized for the input stream
 //since the termination of the command is unknown only new command arrival

@@ -1,3 +1,9 @@
+/***********************************************************************************************
+        Anshul Yadav
+        er.anshulyadav@gmail.com
+        yadav26@github
+        This is for tritium api processor
+************************************************************************************************/
 #pragma once
 #include <string>
 #include <vector>

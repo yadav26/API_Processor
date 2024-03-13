@@ -1,7 +1,13 @@
+/***********************************************************************************************
+        Anshul Yadav
+        er.anshulyadav@gmail.com
+        yadav26@github
+        This is for tritium api processor
+************************************************************************************************/
 
 #include <thread>
 #include <iostream>
-#include "CommandEditor/CmdManager.hpp"
+#include "CmdManager.hpp"
 #include "CmdStreamReader.hpp"
 
 using namespace std;

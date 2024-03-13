@@ -1,3 +1,9 @@
+/***********************************************************************************************
+        Anshul Yadav
+        er.anshulyadav@gmail.com
+        yadav26@github
+        This is for tritium api processor
+************************************************************************************************/
 #include <chrono>
 #include <condition_variable>
 #include <iostream>
