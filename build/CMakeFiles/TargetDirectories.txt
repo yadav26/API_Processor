@@ -1,0 +1,3 @@
+C:/Users/ya934/source/repos/API_Processor/build/CMakeFiles/api_parser.dir
+C:/Users/ya934/source/repos/API_Processor/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/ya934/source/repos/API_Processor/build/CMakeFiles/ZERO_CHECK.dir
