@@ -1,7 +1,7 @@
 
 #include <thread>
 #include <iostream>
-#include "CmdManager.hpp"
+#include "CommandEditor/CmdManager.hpp"
 #include "CmdStreamReader.hpp"
 
 using namespace std;

@@ -108,7 +108,7 @@ protected:
 		buffer.Push({ v.begin() , v.end() });
 		stream = std::stringstream();
 	}
-	
+
 public:
 	virtual void start() = 0;
 	virtual void finish() {
@@ -135,9 +135,11 @@ public:
 	}
 	void start()override {
 
+		cout << "\n Enter api byte stream append [TERMINATE] on finish: ";
 		while (!done) {
 			string s;
-			cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";
+			//cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";
+			cout << "\n more stream command bytes: ";	
 			std::getline(std::cin, s);
 			auto pos = s.find("[TERMINATE]");
 			if (pos != string::npos)

@@ -5,8 +5,6 @@
 
 #pragma once
 
-
-
 class CmdStore {
 	const std::vector<std::string> DEFAULT_CMDS = {
 		"activate",
