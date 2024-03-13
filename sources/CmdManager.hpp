@@ -65,7 +65,7 @@ public:
         string sin;
         bool done = false;
         while (!done) {
-            cout << "\n" << "Add below operation id\n0: Print attributes of command,\n1: Add a new command, \n2: Add an attribute to existing command, \n3: Delete Command \n4: Remove attributes from command \n5: Anything else to exit";
+            cout << "\n===================\nAdd below operation id\n0: Print attributes of command,\n1: Add a new command, \n2: Add an attribute to existing command, \n3: Delete Command \n4: Remove attributes from command \n5: Anything else to exit";
             cout << "\n===== : ";
             std::getline(std::cin, sin);
             op = std::atoi(sin.c_str());
@@ -89,10 +89,16 @@ public:
             break;
             case 2://edit cmds
             {
-                cout << "\n2-Add new attributes to command :";
+                cout << "\n2-Add new attributes to command [" << ListAllCommands() << "]:";
                 string cmdname;
                 std::getline(std::cin, cmdname);
-                cout << "\n2-Add new attribute/s [ " << ListAllAttributes(to_lower(cmdname)) << "]: ";
+                auto v =  ListAllAttributes(to_lower(cmdname));
+                if(v.empty())
+                {
+                    cerr << "\n Err: Invalid command name provided.";
+                    break;
+                }
+                cout << "\n2-Add new attribute/s [ " << v << "]: ";
                 std::unordered_set<string> attriblists = ReadAttributeListCmdLine();
                 AddAttributesInCmd(cmdname, attriblists);
             }
@@ -111,7 +117,13 @@ public:
                 cout << "\n4-Remove attributes from command [" << ListAllCommands() << "]:";
                 string cmdname;
                 std::getline(std::cin, cmdname);
-                cout << "\n4- Attributes to be removed [ " << ListAllAttributes(to_lower(cmdname)) << "]: ";
+                auto v = ListAllAttributes(to_lower(cmdname));
+                if(v.empty())
+                {
+                    cerr << "\n Err: Invalid command name provided.";
+                    break;
+                }
+                cout << "\n4- Attributes to be removed [ " << v << "]: ";
                 std::unordered_set<string> attriblists = ReadAttributeListCmdLine();
                 RemoveAttributesInCmd(cmdname, attriblists);
             }

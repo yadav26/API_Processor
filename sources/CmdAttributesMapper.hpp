@@ -92,6 +92,9 @@ public:
 	}
 	string ListAllAttributes(const string& cmd) {
 		string s;
+		if(CmdsAttributesMap.find(cmd) == CmdsAttributesMap.end())
+			return s;
+		
 		for (auto& a : CmdsAttributesMap[cmd])
 			s = s + a + ",";
 		
