@@ -39,7 +39,22 @@ class CmdManager {
     string ListAllCommands() {
 		return CmdAttributesMapper::GetInstance().ListAllCommands();
 	}
-    
+    std::unordered_set<string> ReadAttributeListCmdLine()
+    {
+        std::unordered_set<string> attriblists;
+        string atts;
+        std::getline(std::cin, atts);
+        std::stringstream ss(atts);
+
+        while (ss.good())
+        {
+            string a;
+            getline(ss, a, ',');
+            a = to_lower(a);
+            if(!a.empty())attriblists.insert(a);
+        }
+        return attriblists;
+    }
 public:
 	static CmdManager& GetCmdManager() {
 		static CmdManager mgr;
@@ -51,6 +66,7 @@ public:
         bool done = false;
         while (!done) {
             cout << "\n" << "Add below operation id\n0: Print attributes of command,\n1: Add a new command, \n2: Add an attribute to existing command, \n3: Delete Command \n4: Remove attributes from command \n5: Anything else to exit";
+            cout << "\n===== : ";
             std::getline(std::cin, sin);
             op = std::atoi(sin.c_str());
             switch (op) {
@@ -67,43 +83,23 @@ public:
                 string cmdname;
                 std::getline(std::cin, cmdname);
                 cout << "\n1-Add attribute/s to this (e.g att1,att2,att3):";
-                string atts;
-                std::getline(std::cin, atts);
-                std::unordered_set<string> attriblists;
-                std::stringstream ss(atts);
-                while (ss.good())
-                {
-                    string a;
-                    getline(ss, a, ',');
-                    a = to_lower(a);
-                    attriblists.insert(a);
-                }
+                std::unordered_set<string> attriblists = ReadAttributeListCmdLine();
                 AddNewCommand(cmdname, attriblists);
             }
             break;
             case 2://edit cmds
             {
-                cout << "\n2-Command name to add new attributes:";
+                cout << "\n2-Add new attributes to command :";
                 string cmdname;
                 std::getline(std::cin, cmdname);
-                cout << "\n2-Add attribute/s names(e.g att1,att2,att3):";
-                string atts;
-                std::getline(std::cin, atts);
-                std::unordered_set<string> attriblists;
-                std::stringstream ss(atts);
-                while (ss.good())
-                {
-                    string a;
-                    getline(ss, a, ',');
-                    a = to_lower(a);
-                    attriblists.insert(a);
-                }
+                cout << "\n2-Add new attribute/s [ " << ListAllAttributes(to_lower(cmdname)) << "]: ";
+                std::unordered_set<string> attriblists = ReadAttributeListCmdLine();
                 AddAttributesInCmd(cmdname, attriblists);
             }
             break;
-            case 3://edit cmds
+            case 3://delete cmds
             {
-                cout << "\n3-Delete command :";
+                cout << "\n3-Delete command [" << ListAllCommands() << "]:";
                 string cmdname;
                 std::getline(std::cin, cmdname);
                 DeleteCommand(cmdname);
@@ -116,18 +112,7 @@ public:
                 string cmdname;
                 std::getline(std::cin, cmdname);
                 cout << "\n4- Attributes to be removed [ " << ListAllAttributes(to_lower(cmdname)) << "]: ";
-                string atts;
-                std::getline(std::cin, atts);
-                std::unordered_set<string> attriblists;
-                std::stringstream ss(atts);
-
-                while (ss.good())
-                {
-                    string a;
-                    getline(ss, a, ',');
-                    a = to_lower(a);
-                    attriblists.insert(a);
-                }
+                std::unordered_set<string> attriblists = ReadAttributeListCmdLine();
                 RemoveAttributesInCmd(cmdname, attriblists);
             }
             break;
