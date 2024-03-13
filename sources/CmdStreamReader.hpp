@@ -19,10 +19,10 @@ class CmdStreamReader {
 		int start = 0;
 		bool trimming = true;
 		int cnt = 0;
-		while (std::string::npos != start) {
+		while ((int)std::string::npos != start) {
 			start = str.find('[');
-			if (std::string::npos != start) {
-				int end = str.find(']');
+			if ((int)std::string::npos != start) {
+				auto end = str.find(']');
 				if (end == std::string::npos) {
 					// we have incomplete string.
 					nt = str.substr(start, str.size() - start );
@@ -51,7 +51,7 @@ class CmdStreamReader {
 				str = str.substr(end + 1, str.size() - (end + 1));
 			}
 		}
-		return move(v);
+		return v;
 	}
 protected:
 	void extractCMND(stringstream& stream) {
@@ -75,7 +75,7 @@ protected:
 		vector<string> v = Tokenizer(s, nontokenized);
 
 		int start = -1, end = -1;
-		for (int i = 0; i < v.size(); ++i) {
+		for (int i = 0; i < (int)v.size(); ++i) {
 			if (v[i] == "CMND") {
 				if (start != -1) end = i;
 				if (start == -1) start = i;
@@ -87,7 +87,7 @@ protected:
 			buffer.Push({ v.begin() + start, v.begin() + end });
 			//now reset stream
 			string ns;
-			for (int i = end; i < v.size(); ++i)
+			for (int i = end; i < (int)v.size(); ++i)
 				ns += "[" + v[i] + "]";
 			ns += nontokenized;
 			stream = std::stringstream();
@@ -122,7 +122,7 @@ public:
 			string s;
 			cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";
 			std::getline(std::cin, s);
-			int pos = s.find("[TERMINATE]");
+			auto pos = s.find("[TERMINATE]");
 			if (pos != string::npos)
 				done = true;
 			stream << s;

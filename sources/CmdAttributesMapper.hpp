@@ -21,17 +21,18 @@ class CmdAttributesMapper {
 		std::string ns = s;
 		for (char& c : ns)
 			c = tolower(c);
-		return move(ns);
+		return ns;
 	}
 	bool AddInExistingCmd(const string& cmd, const unordered_set<string>& attributes) {
-		for (auto& att : attributes) 
-			CmdsAttributesMap[cmd].insert(att);
-		
+		auto& v = CmdsAttributesMap[cmd];
+		for (auto& att : attributes) {
+			v.insert(att);
+		}
 		return true;
 	}
 
 	bool RemoveFromExistingCmd(const string& cmd, const unordered_set<string>& attributes) {
-		auto att = CmdsAttributesMap[to_lower(cmd)];
+		auto& att = CmdsAttributesMap[to_lower(cmd)];
 		for (auto& a : attributes) {
 			for (auto it = att.begin(); it != att.end();)
 			{
@@ -62,7 +63,6 @@ class CmdAttributesMapper {
 		}
 	}
 	CmdAttributesMapper() {
-
 		for (auto& cmd : CmdStore::GetCmdStore().GetAllCmds())
 			AddDefaultAttributes(cmd);
 	}
@@ -84,12 +84,24 @@ public:
 			CmdsAttributesMap[cmd].insert(att);
 		}
 	}
-	string ListAllAttributes(ATTRIBUTES_OPID opn, const string& cmd) {
+	void DumpCmdsAttributes(){
+		for(auto& [k,v]: CmdsAttributesMap){
+			cout << "\n[" << k <<"]  [";
+			cout << ListAllAttributes(k) <<"]";
+		}
+	}
+	string ListAllAttributes(const string& cmd) {
 		string s;
 		for (auto& a : CmdsAttributesMap[cmd])
 			s = s + a + ",";
 		
-		return s;
+		return s.empty()? s: s.erase(s.size()-1,1);
+	}
+	string ListAllCommands() {
+		string s;
+		for (auto& [k,v] : CmdsAttributesMap)
+			s = s + k + ",";
+		return s.empty()? s: s.erase(s.size()-1,1);
 	}
 	void UpdateAttributes(ATTRIBUTES_OPID opn, const string& cmd, const unordered_set<string>& attributes) {
 

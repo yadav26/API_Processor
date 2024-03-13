@@ -12,7 +12,8 @@ class CmdStore {
 		"activate",
 		"activate_rd",
 		"settle",
-		"clear_session"
+		"clear_session",
+		"start_log"
 	};
 	std::unordered_set<std::string> m_Cmds;
 
@@ -20,7 +21,7 @@ class CmdStore {
 		std::string ns = s;
 		for (char& c : ns)
 			c = tolower(c);
-		return move(ns);
+		return ns;
 	}
 
 	CmdStore() {
@@ -52,7 +53,7 @@ public:
 		if (auto search = m_Cmds.find(c); search != m_Cmds.end())
 		{
 			auto cmd = *search;
-			if (cmd.size() == len) 
+			if ((int)cmd.size() == len) 
 				return true;
 			else
 				return false;

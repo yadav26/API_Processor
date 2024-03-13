@@ -7,6 +7,12 @@
 
 class CmdManager {
 
+	std::string to_lower(const std::string& s) {
+		std::string ns = s;
+		for (char& c : ns)
+			c = tolower(c);
+		return ns;
+	}
 	CmdManager() = default;
 	void AddNewCommand(const string& c, const unordered_set<string>& attributes) {
 		CmdStore::GetCmdStore().addNewCmd(c);
@@ -23,9 +29,17 @@ class CmdManager {
 	void RemoveAttributesInCmd(const string& c, const unordered_set<string>& attributes) {
 		CmdAttributesMapper::GetInstance().UpdateAttributes(ATTRIBUTES_OPID::RemoveFromExistingCmd, c, attributes);
 	}
-	void ListAllAttributes(const string& c, string& out) {
-		out = CmdAttributesMapper::GetInstance().ListAllAttributes(ATTRIBUTES_OPID::ShowAttributesFromCmd, c);
+    void PrintCmdsAttributes()
+    {
+        CmdAttributesMapper::GetInstance().DumpCmdsAttributes();
+    }
+	string ListAllAttributes(const string& c) {
+		return CmdAttributesMapper::GetInstance().ListAllAttributes(c);
 	}
+    string ListAllCommands() {
+		return CmdAttributesMapper::GetInstance().ListAllCommands();
+	}
+    
 public:
 	static CmdManager& GetCmdManager() {
 		static CmdManager mgr;
@@ -42,12 +56,9 @@ public:
             switch (op) {
             case 0://edit cmd remove att
             {
-                cout << "\n0-Print attributes of command:";
-                string cmdname;
-                std::getline(std::cin, cmdname);
-                string atts;
-                ListAllAttributes(cmdname, atts);
-                cout << atts << endl;
+                cout << "\n";
+                PrintCmdsAttributes();
+                cout << "\n";
             }
             break;
             case 1://add
@@ -55,16 +66,17 @@ public:
                 cout << "\n1-Add a new command :";
                 string cmdname;
                 std::getline(std::cin, cmdname);
-                cout << "\n1-Add attributes to this (e.g att1,att2,att3):";
+                cout << "\n1-Add attribute/s to this (e.g att1,att2,att3):";
                 string atts;
                 std::getline(std::cin, atts);
                 std::unordered_set<string> attriblists;
                 std::stringstream ss(atts);
                 while (ss.good())
                 {
-                    string substr;
-                    getline(ss, substr, ',');
-                    attriblists.insert(substr);
+                    string a;
+                    getline(ss, a, ',');
+                    a = to_lower(a);
+                    attriblists.insert(a);
                 }
                 AddNewCommand(cmdname, attriblists);
             }
@@ -74,16 +86,17 @@ public:
                 cout << "\n2-Command name to add new attributes:";
                 string cmdname;
                 std::getline(std::cin, cmdname);
-                cout << "\n2-Add attributes names(e.g att1,att2,att3):";
+                cout << "\n2-Add attribute/s names(e.g att1,att2,att3):";
                 string atts;
                 std::getline(std::cin, atts);
                 std::unordered_set<string> attriblists;
                 std::stringstream ss(atts);
                 while (ss.good())
                 {
-                    string substr;
-                    getline(ss, substr, ',');
-                    attriblists.insert(substr);
+                    string a;
+                    getline(ss, a, ',');
+                    a = to_lower(a);
+                    attriblists.insert(a);
                 }
                 AddAttributesInCmd(cmdname, attriblists);
             }
@@ -99,10 +112,10 @@ public:
             break;
             case 4://edit cmd remove att
             {
-                cout << "\n4-Remove attributes from command:";
+                cout << "\n4-Remove attributes from command [" << ListAllCommands() << "]:";
                 string cmdname;
                 std::getline(std::cin, cmdname);
-                cout << "\n4- Attributes names to be removed(e.g att1,att2,att3):";
+                cout << "\n4- Attributes to be removed [ " << ListAllAttributes(to_lower(cmdname)) << "]: ";
                 string atts;
                 std::getline(std::cin, atts);
                 std::unordered_set<string> attriblists;
@@ -110,9 +123,10 @@ public:
 
                 while (ss.good())
                 {
-                    string substr;
-                    getline(ss, substr, ',');
-                    attriblists.insert(substr);
+                    string a;
+                    getline(ss, a, ',');
+                    a = to_lower(a);
+                    attriblists.insert(a);
                 }
                 RemoveAttributesInCmd(cmdname, attriblists);
             }

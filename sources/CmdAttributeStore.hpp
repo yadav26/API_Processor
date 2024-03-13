@@ -17,7 +17,7 @@ class CmdAttributeStore {
 		std::string ns = s;
 		for (char& c : ns)
 			c = tolower(c);
-		return move(ns);
+		return ns;
 	}
 	CmdAttributeStore() {
 		for (auto& c : DEFAULT_ATTRIB)

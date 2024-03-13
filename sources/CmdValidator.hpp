@@ -12,7 +12,7 @@ class CmdValidator {
 		std::string ns = s;
 		for (char& c : ns)
 			c = tolower(c);
-		return move(ns);
+		return ns;
 	}
 
 public:
@@ -25,13 +25,13 @@ public:
 		}
 
 		auto cmdlen = atoi(v[1].c_str());
-		if (v[2].size() != cmdlen) {
+		if ((int)v[2].size() != cmdlen) {
 			cout << "\n CMDlen match failed.";
 			return false;
 		}
 		
 		if (!CmdStore::GetCmdStore().IsValidCmd(v[2])) {
-			cout << "\n Failed cmd check from store: " << v[1];
+			cout << "\n Failed cmd check from store: " << v[2];
 			return false;
 		}
 

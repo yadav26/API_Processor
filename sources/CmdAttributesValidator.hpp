@@ -20,7 +20,7 @@ class CmdAttributesValidator {
 public:
 	bool Validate_Attributes(const string& cmd, vector<string> v) {
 
-		for (int i = 0; i < v.size(); i = i + 3) {
+		for (int i = 0; i < (int)v.size(); i = i + 3) {
 			//validate the att name
 			string name = v[i];
 			if (!CmdAttributeStore::GetInstance().IsValidAttrib(name))
@@ -34,8 +34,8 @@ public:
 				return false;
 			}
 			auto len = atoi(v[i + 1].c_str());
-			if (v[i + 2].size() != len) {
-				printf("\n attrib len match failed. expected(%d), actual(%d)", v[i + 2].size(), len);
+			if ((int)v[i + 2].size() != len) {
+				printf("\n attrib len match failed. expected(%d), actual(%d)", (int)v[i + 2].size(), len);
 				return false;
 			}
 
