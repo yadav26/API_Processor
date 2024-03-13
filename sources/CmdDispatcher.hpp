@@ -21,10 +21,35 @@ public:
             //wait till buffer available;
             vector<string> cmdTokens = buffer.GetCmd();
             buffer.Pop();
+            int sp = 0;
+            vector<pair<int, int>> positions;
+            
+            for (int i = 1; i < (int)cmdTokens.size();++i) {
+
+                if (cmdTokens[i] == "CMND")
+                {
+                    pair<int, int> p = { sp,i - 1 };
+                    positions.push_back(p);
+                    sp = i;
+                }
+            }
+            
+            positions.push_back({sp,cmdTokens.size()-1});
+
             // Call the process here
             // share the buffer
-            auto reply = ProcessCmdValidation(cmdTokens);
-            cout << "\n CmdID(" << ++cmdid << ") : " << reply << endl;
+            string reply;
+            for (int i = 0; i < (int)positions.size(); ++i) {
+                vector<string> vcmd = { cmdTokens.begin() + positions[i].first, cmdTokens.begin() + positions[i].second + 1 };
+                reply = ProcessCmdValidation(vcmd);
+                cout << "\n id(" << ++cmdid << ") :  ";
+                string scmd;
+                for (auto& p : vcmd)
+                    scmd += '[' + p + ']';
+                    
+                cout << scmd << ":===>" << reply ;
+             }
+            
         }
         
         //residual buffer processing.
@@ -42,12 +67,13 @@ public:
         done = true;
     }
 
-    string ProcessCmdValidation(vector<string>& txt) {
+    string ProcessCmdValidation(vector<string> txt) {
         CmdValidator cv;
-        auto status = cv.Validate(txt);
+        string reason;
+        auto status = cv.Validate(txt, reason);
         if (status)
             return Response::GetSuccessResp();
 
-        return Response::GetFailedResp();
+        return Response::GetFailedResp(reason);
     }
 };

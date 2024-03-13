@@ -450,3 +450,17 @@ winbuild/CMakeFiles/3.24.0-rc2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 winbuild/CMakeFiles/3.24.0-rc2/CompilerIdCXX/CompilerIdCXX.exe
 winbuild/CMakeFiles/3.24.0-rc2/CompilerIdCXX/CompilerIdCXX.vcxproj
 winbuild/CMakeFiles/4635d4518bc6dc107560dd1bf5c93ef1/generate.stamp.rule
+linuxbuild/sources/CommandEditor/cmake_install.cmake
+linuxbuild/sources/CommandEditor/Makefile
+linuxbuild/sources/CommandEditor/CMakeFiles/CMakeDirectoryInformation.cmake
+linuxbuild/sources/CommandEditor/CMakeFiles/progress.marks
+linuxbuild/sources/CommandHandlers/cmake_install.cmake
+linuxbuild/sources/CommandHandlers/Makefile
+linuxbuild/sources/CommandHandlers/CMakeFiles/CMakeDirectoryInformation.cmake
+linuxbuild/sources/CommandHandlers/CMakeFiles/progress.marks
+winbuild/sources/CommandEditor/cmake_install.cmake
+winbuild/sources/CommandEditor/CMakeFiles/generate.stamp
+winbuild/sources/CommandEditor/CMakeFiles/generate.stamp.depend
+winbuild/sources/CommandHandlers/cmake_install.cmake
+winbuild/sources/CommandHandlers/CMakeFiles/generate.stamp
+winbuild/sources/CommandHandlers/CMakeFiles/generate.stamp.depend

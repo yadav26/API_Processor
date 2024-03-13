@@ -17,26 +17,30 @@ class CmdValidator {
 
 public:
 	
-	bool Validate(const vector<string>& v) {
+	bool Validate(const vector<string>& v, string& reason) {
 
 		if (v[0] != "CMND") {
-			cout << "\n Failed CMND identity.";
+			//cout << "\n Failed CMND identity.";
+			reason = "Failed CMND identity";
 			return false;
 		}
 
 		auto cmdlen = atoi(v[1].c_str());
 		if ((int)v[2].size() != cmdlen) {
-			cout << "\n CMDlen match failed.";
+			//cout << "\n CMDlen match failed.";
+			reason = "Cmdlen match failed";
 			return false;
 		}
 		
 		if (!CmdStore::GetCmdStore().IsValidCmd(v[2])) {
-			cout << "\n Failed cmd check from store: " << v[2];
+			//cout << "\n Failed cmd check from store: " << v[2];
+			reason = "Command didnot exists";
 			return false;
 		}
 
 		CmdAttributesValidator av;
-		return av.Validate_Attributes(v[2], {v.begin() + 3, v.end()});
+		
+		return av.Validate_Attributes(v[2], {v.begin() + 3, v.end()}, reason);
 	}
 
 };

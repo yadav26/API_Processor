@@ -4,10 +4,7 @@
 
 #pragma once
 
-
 using namespace std;
-
-
 class CmdAttributeStore {
 	const std::vector<std::string> DEFAULT_ATTRIB = {
 	"amount", "txt"
