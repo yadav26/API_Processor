@@ -146,7 +146,7 @@ public:
 		while (!done) {
 			string s;
 			//cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";
-			cout << "\n Provide more api command stream: ";	
+			cout << "\n Provide more api command stream: \n";	
 			std::getline(std::cin, s);
 			auto pos = s.find("[TERMINATE]");
 			if (pos != string::npos)
