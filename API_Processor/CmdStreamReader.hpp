@@ -13,9 +13,6 @@ using namespace std;
 //all exit
 
 class CmdStreamReader {
-	stringstream stream;
-	static inline bool done = false;
-
 	//auto s = "[  C M N D][8 ][ A C T I V A T E ][T  X T][20][TAAAA   AP YOUR CREDIT CARD][  AMO UNT ][3][400 ] [  T X  T  ][20][TAP YOUR CREDIT CARD]";
 	vector<string> Tokenizer(string str, string& nt) {
 		vector<string> v;
@@ -56,39 +53,8 @@ class CmdStreamReader {
 		}
 		return move(v);
 	}
-
-public:
-	void start() {
-		vector<string> vs = {
-			"[  C M N D][8 ][ A C T I V A T E ][T  X T][2 7][TAAAA   AP YOUR CREDIT CARD][  AMO UNT ][3][400 ] [  T X  T  ][2 2][ T AP YOUR CREDIT CARD]",
-			"[  C M N D][8 ][ A C T I V A T E ][T  X T][2 7][TAAAA   ",
-			"AP YOUR CREDIT CARD][  AMO",
-			" UNT ][3][400][T X  T][2 2][T AP YOUR CREDIT CARD]"
-		};
-
-		int i = -1;
-		while (!done ) {
-			string s;
-			cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";
-			std::getline(std::cin, s);
-			int pos = s.find("[TERMINATE]");
-			if (pos != string::npos)
-				done = true;
-			stream << s;
-			extractCMND();
-		}
-		extractLastCMND();
-		//signal dispatcher to finish
-		CmdDispatcher cd;
-		cd.finish();
-		
-	}
-
-	void finish() {
-
-	}
-
-	void extractCMND() {
+protected:
+	void extractCMND(stringstream& stream) {
 		auto s = stream.str();
 		string nontokenized;
 		int opencnt = 0;
@@ -103,7 +69,7 @@ public:
 				stream = std::stringstream();
 				return;
 			}
-			if (p == '[' )++opencnt;
+			if (p == '[')++opencnt;
 			if (p == ']') --opencnt;
 		}
 		vector<string> v = Tokenizer(s, nontokenized);
@@ -111,9 +77,8 @@ public:
 		int start = -1, end = -1;
 		for (int i = 0; i < v.size(); ++i) {
 			if (v[i] == "CMND") {
-				if (start != -1) end = i ;
+				if (start != -1) end = i;
 				if (start == -1) start = i;
-
 			}
 		}
 		if (start != -1 && end > start)
@@ -129,8 +94,7 @@ public:
 			stream << ns;
 		}
 	}
-
-	void extractLastCMND() {
+	void extractLastCMND(stringstream& stream) {
 		auto s = stream.str();
 		string nontokenized;
 		vector<string> v = Tokenizer(s, nontokenized);
@@ -139,5 +103,53 @@ public:
 		buffer.Push({ v.begin() , v.end() });
 		stream = std::stringstream();
 	}
-	
+public:
+	virtual void start() = 0;
+	virtual void finish() {
+
+	}
+};
+
+class CmdLineStreamReader : public CmdStreamReader
+{
+	stringstream stream;
+	static inline bool done = false;
+public:
+	CmdLineStreamReader() = default;
+	void start()override {
+
+		int i = -1;
+		while (!done) {
+			string s;
+			cout << "\n Enter api byte stream e.g. [CMND][9][START_LOG][CMND][8][ACTIVATE][AMOUNT][3][400][TXT][20][TAP YOUR CREDIT CARD][TERMINATE]: ";
+			std::getline(std::cin, s);
+			int pos = s.find("[TERMINATE]");
+			if (pos != string::npos)
+				done = true;
+			stream << s;
+			extractCMND(stream);
+		}
+		extractLastCMND(stream);
+		//signal dispatcher to finish
+		CmdDispatcher cd;
+		cd.finish();
+	}
+};
+
+class SocketStreamReader : public CmdStreamReader
+{
+public:
+	SocketStreamReader() = default;
+	void start()override {
+		//implement the socket buffer reading here
+	}
+};
+
+class FileStreamReader : public CmdStreamReader
+{
+public:
+	FileStreamReader() = default;
+	void start()override {
+		//implement the file reading here
+	}
 };

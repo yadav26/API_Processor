@@ -22,7 +22,7 @@ int main()
     
     std::thread byteFeeder([&]() {
         cout << "\n------Stream bytes reader successfully started.\n";
-        CmdStreamReader sr;
+        CmdLineStreamReader sr;
         sr.start();
     });
 

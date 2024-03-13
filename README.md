@@ -7,7 +7,13 @@
 ## Classes descriptions
 
 ### CmdStreamReader
-This is primarily responsible for reading byte stream, from cin or socket or files
+This is base class for stream tokenization and extract fully achieved commands.
+	#### CmdLineStreamReader
+	Child class derived from CmdStreamReader to read input from command line.
+	#### SocketStreamReader
+	Child class derived from CmdStreamReader to read input from listening server socket buffer.
+	#### FileStreamReader
+	Child class derived from CmdStreamReader to read input from file buffer .
 
 ### CmdBufferManager
 This is filled with arrived full commands by StreamReader. It maintains a FIFO thread safe queue.
